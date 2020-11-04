@@ -3,7 +3,7 @@
 //  CoreMotionTask
 //
 //  Created by Fatih Bas on 27.10.20.
-//
+// Quellenangaben im Protokoll
 
 import UIKit
 import CoreData
@@ -42,6 +42,9 @@ class ViewController: UIViewController {
         startAccelerometer()
     }
     // MARK: functions
+    /**
+     Für den Zugriff auf die Sensoren und die Erfassung der Daten zuständig.
+     */
     func startAccelerometer(){
         motion.accelerometerUpdateInterval = 1.0 / 60.0;
         motion.startAccelerometerUpdates(to: OperationQueue.current!) { [self] (data, error) in
@@ -66,13 +69,17 @@ class ViewController: UIViewController {
                 }
         }
     }
-    
+    /**
+     Berechnet die Beschleunigung (a) aus den Übermittelten Daten
+     */
     func calculateAccele(_ pitch: Double,_ roll: Double,_ yaw: Double) -> Double {
         let sum = sqrt((pitch * pitch) + (roll * roll) + (yaw * yaw))
         let result = abs(sum)
         return result
     }
-    
+    /**
+     Erstellt einen Namen für die Exportierte Datei.
+     */
     func createFileName() -> String {
         let date = Date()
         let calendar = Calendar.current
@@ -80,7 +87,9 @@ class ViewController: UIViewController {
         let minutes = calendar.component(.minute, from: date)
         return "DataOfAccele\(hour).\(minutes).csv"
     }
-    
+    /**
+     Exportiert die erfassten Daten in eine .csv Datei ins iPhonespeicher.
+     */
     func exportCSV() {
         let fileName = createFileName()
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) [0] as String
