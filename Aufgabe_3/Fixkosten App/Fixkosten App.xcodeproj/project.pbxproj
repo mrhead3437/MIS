@@ -14,6 +14,7 @@
 		314D3D86256AF94500A7AC3B /* Fixkosten_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 314D3D84256AF94500A7AC3B /* Fixkosten_App.xcdatamodeld */; };
 		314D3D88256AF94800A7AC3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 314D3D87256AF94800A7AC3B /* Assets.xcassets */; };
 		314D3D8B256AF94800A7AC3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 314D3D89256AF94800A7AC3B /* LaunchScreen.storyboard */; };
+		31B6220E2592783C00192EE6 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B6220D2592783C00192EE6 /* CoreDataHandler.swift */; };
 		31F41CC4256FB6410068CA6B /* CellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F41CC3256FB6410068CA6B /* CellItem.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		314D3D87256AF94800A7AC3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		314D3D8A256AF94800A7AC3B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		314D3D8C256AF94800A7AC3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		31B6220D2592783C00192EE6 /* CoreDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 		31F41CC3256FB6410068CA6B /* CellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +66,7 @@
 				314D3D7D256AF94500A7AC3B /* SceneDelegate.swift */,
 				314D3D7F256AF94500A7AC3B /* ViewController.swift */,
 				314D3D81256AF94500A7AC3B /* Main.storyboard */,
+				31B6220D2592783C00192EE6 /* CoreDataHandler.swift */,
 				31F41CC3256FB6410068CA6B /* CellItem.swift */,
 				314D3D87256AF94800A7AC3B /* Assets.xcassets */,
 				314D3D89256AF94800A7AC3B /* LaunchScreen.storyboard */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				31F41CC4256FB6410068CA6B /* CellItem.swift in Sources */,
+				31B6220E2592783C00192EE6 /* CoreDataHandler.swift in Sources */,
 				314D3D80256AF94500A7AC3B /* ViewController.swift in Sources */,
 				314D3D86256AF94500A7AC3B /* Fixkosten_App.xcdatamodeld in Sources */,
 				314D3D7C256AF94500A7AC3B /* AppDelegate.swift in Sources */,
