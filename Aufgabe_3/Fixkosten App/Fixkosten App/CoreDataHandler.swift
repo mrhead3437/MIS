@@ -29,6 +29,39 @@ class CoraDataHandler {
     }
     
     //MARK: functions
+    
+    //Save data
+    func addNewItem(category: String, name: String, cost: String, startDate: String, duration: String, endDate: String) {
+        
+        let cellItem = NSEntityDescription.insertNewObject(forEntityName: "CellItemData", into: context) as! CellItemData
+        
+        cellItem.category = category
+        cellItem.name = name
+        cellItem.cost = cost
+        cellItem.startDate = startDate
+        cellItem.duration = duration
+        cellItem.endDate = endDate
+        
+        saveItem()
+        
+        switch category {
+        case "Auto": carCosts.append(cellItem)
+        case "Telefon": phoneCosts.append(cellItem)
+        case "Haushalt": homeCosts.append(cellItem)
+        case "Versicherung": insuranceCosts.append(cellItem)
+        case "Versicherung": investCosts.append(cellItem)
+        default:
+            break
+        }
+    }
+    
+    func saveItem() {
+        do {
+            try context.save()
+        } catch  {
+            print("ERR")
+        }
+    }
     /**
      Number of elements in a category.
      */

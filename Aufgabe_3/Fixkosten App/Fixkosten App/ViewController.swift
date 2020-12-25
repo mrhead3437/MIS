@@ -18,10 +18,12 @@ class ViewController: UIViewController {
     static let placeholderInputEndDate = "Enddatum der Fixkosten"
     static let placeholderInputDuration = "Dauer der Fixkosten"
     static let currency = "€"
+    static let checkUserInputErrorString = "User Eingabe fehlerhaft oder nicht vorhanden!"
     
-    var category: [String] = ["Auto", "Telefon", "Haushalt", "Versicherung", "Sparplan"]
+    var category: [String] = ["Auto", "Telefon", "Haushalt", "Versicherung", "Versicherung"]
     let datePicker = UIDatePicker()
-    var date = UITextField()
+    var startDate = UITextField()
+    var endDate = UITextField()
     
     @IBOutlet weak var fixedCostsTableView: UITableView!
     
@@ -99,7 +101,7 @@ extension ViewController: UITableViewDataSource {
         return itemCell
     }
     
-//MARK: functions
+//MARK: -functions
     /**
      Creates a form to enter the data for the fixed costs.
      */
@@ -124,20 +126,26 @@ extension ViewController: UITableViewDataSource {
             startDateTextField.placeholder = ViewController.placeholderInputStartDate
             startDateTextField.addTarget(self, action: #selector(self.openDatePicker(_:)), for: .touchDown)
         }
-        
-        //endDate
-        inputAlert.addTextField { (endDateTextField) in
-            endDateTextField.placeholder = ViewController.placeholderInputEndDate
-        }
-        
+
         //duration
         inputAlert.addTextField { (durationTextField) in
             durationTextField.placeholder = ViewController.placeholderInputDuration
             durationTextField.keyboardType = .numberPad
+            durationTextField.addTarget(self, action: #selector(self.calculateDuration(_:)), for: .editingDidEnd)
+        }
+        
+        //endDate
+        inputAlert.addTextField { (endDateTextField) in
+            self.endDate = endDateTextField
+            endDateTextField.placeholder = ViewController.placeholderInputEndDate
         }
         
         let saveButton = UIAlertAction(title: "Speichern", style: .default) { (saveButton) in
-            
+            let name = self.checkUserInput(value: inputAlert.textFields![0].text!)
+            let cost = self.checkUserInput(value: inputAlert.textFields![1].text!)
+            let startDate = self.checkUserInput(value: inputAlert.textFields![2].text!)
+            let duration = self.checkUserInput(value: inputAlert.textFields![3].text!)
+            let endDate = self.checkUserInput(value: inputAlert.textFields![4].text!)
         }
         
         let cancelButton = UIAlertAction(title: "Abbrechen", style: .default) { (cancelButton) in
@@ -151,7 +159,7 @@ extension ViewController: UITableViewDataSource {
     }
     
     /**
-     Lists all existing categories in the alert.
+     Lists all existing categories in the alert and create a cost in choosen category.
      */
     func createAction(category: String) -> UIAlertAction {
         let action = UIAlertAction(title: category, style: .default) { (action) in
@@ -181,20 +189,46 @@ extension ViewController: UITableViewDataSource {
      Open date picker and select a date.
      */
     @objc func openDatePicker(_ textField: UITextField) {
-        date = textField
+        startDate = textField
         datePicker.datePickerMode = .date
         textField.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(changeDate(_:)), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(handleDate(_:)), for: .valueChanged)
     }
     /**
      Adjust the formatting of the date and write it in the corresponding text field.
      */
-    @objc func changeDate(_ datePicker: UIDatePicker) {
+    @objc func handleDate(_ datePicker: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
         dateFormatter.locale = Locale(identifier: "de_DE")
         let dateAsString = dateFormatter.string(from: datePicker.date)
-        date.text = dateAsString
+        if dateAsString.isEmpty{
+            return
+        } else {
+            startDate.text = dateAsString
+        }
+    }
+    
+    @objc func calculateDuration(_ textField: UITextField) {
+        if ((textField.text?.isEmpty) == nil) {
+            textField.text = ""
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yyyy"
+            dateFormatter.locale = Locale(identifier: "de_DE")
+            
+            let days = Int(textField.text!)! * 30
+            let date = datePicker.date.addingTimeInterval(TimeInterval(60*60*24*days))
+            endDate.text = dateFormatter.string(from: date)
+        }
+    }
+    
+    func checkUserInput(value: String?) -> String {
+        if let userInput = value {
+            return userInput
+        } else {
+            return ViewController.checkUserInputErrorString
+        }
     }
 }
 
