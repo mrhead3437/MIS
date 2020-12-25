@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    static let labelFont = "HelveticaNeue-Medium"
     static let categorySelectionTitle = "Kategorie"
     static let categorySelectionMessage = "Bitte wählen Sie eine Kategorie aus."
     static let createInputTitle = "Fixkosten hinzufügen"
@@ -17,10 +18,14 @@ class ViewController: UIViewController {
     static let placeholderInputStartDate = "Startdatum der Fixkosten"
     static let placeholderInputEndDate = "Enddatum der Fixkosten"
     static let placeholderInputDuration = "Dauer der Fixkosten"
-    static let currency = "€"
+    static let saveButtonLabel = "Speichern"
+    static let cancelButtonLabel = "Abbrechen"
+    static let currency = " €"
+    static let dateFormatString = "dd MMM yyyy"
+    static let dateLocationString = "de_DE"
     static let checkUserInputErrorString = "User Eingabe fehlerhaft oder nicht vorhanden!"
     
-    var category: [String] = ["Auto", "Telefon", "Haushalt", "Versicherung", "Versicherung"]
+    var category: [String] = ["Auto", "Telefon", "Haushalt", "Versicherung", "Sparplan"]
     let datePicker = UIDatePicker()
     var startDate = UITextField()
     var endDate = UITextField()
@@ -63,7 +68,7 @@ extension ViewController: UITableViewDelegate {
         
         let label = UILabel()
         label.text = category[section]
-        label.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
+        label.font = UIFont(name: ViewController.labelFont, size: 25)
         label.frame = CGRect(x: 20, y: 5, width: 200, height: 35)
         view.addSubview(label)
         
@@ -98,6 +103,15 @@ extension ViewController: UITableViewDataSource {
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let itemCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! CellItem
+        
+        let item = CoraDataHandler.singleton.getCellItem(section: indexPath.section, index: indexPath.row)
+        
+        itemCell.nameOfItem.text = item.name
+        itemCell.costOfItem.text = item.cost
+        itemCell.startDateOfItem.text = item.startDate
+        itemCell.durationOfItem.text = item.duration
+        itemCell.endDateOfItem.text = item.endDate
+        
         return itemCell
     }
     
@@ -140,15 +154,20 @@ extension ViewController: UITableViewDataSource {
             endDateTextField.placeholder = ViewController.placeholderInputEndDate
         }
         
-        let saveButton = UIAlertAction(title: "Speichern", style: .default) { (saveButton) in
+        let saveButton = UIAlertAction(title: ViewController.saveButtonLabel, style: .default) { (saveButton) in
             let name = self.checkUserInput(value: inputAlert.textFields![0].text!)
             let cost = self.checkUserInput(value: inputAlert.textFields![1].text!)
             let startDate = self.checkUserInput(value: inputAlert.textFields![2].text!)
             let duration = self.checkUserInput(value: inputAlert.textFields![3].text!)
             let endDate = self.checkUserInput(value: inputAlert.textFields![4].text!)
+            
+            CoraDataHandler.singleton.addNewItem(category: category, name: name, cost: cost, startDate: startDate, duration: duration, endDate: endDate)
+            
+            self.fixedCostsTableView.reloadData()
+            
         }
         
-        let cancelButton = UIAlertAction(title: "Abbrechen", style: .default) { (cancelButton) in
+        let cancelButton = UIAlertAction(title: ViewController.cancelButtonLabel, style: .default) { (cancelButton) in
             
         }
         
@@ -199,8 +218,8 @@ extension ViewController: UITableViewDataSource {
      */
     @objc func handleDate(_ datePicker: UIDatePicker) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yyyy"
-        dateFormatter.locale = Locale(identifier: "de_DE")
+        dateFormatter.dateFormat = ViewController.dateFormatString
+        dateFormatter.locale = Locale(identifier: ViewController.dateLocationString)
         let dateAsString = dateFormatter.string(from: datePicker.date)
         if dateAsString.isEmpty{
             return
@@ -214,8 +233,8 @@ extension ViewController: UITableViewDataSource {
             textField.text = ""
         } else {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy"
-            dateFormatter.locale = Locale(identifier: "de_DE")
+            dateFormatter.dateFormat = ViewController.dateFormatString
+            dateFormatter.locale = Locale(identifier: ViewController.dateLocationString)
             
             let days = Int(textField.text!)! * 30
             let date = datePicker.date.addingTimeInterval(TimeInterval(60*60*24*days))

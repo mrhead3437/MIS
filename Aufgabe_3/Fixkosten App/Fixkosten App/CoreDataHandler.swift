@@ -30,6 +30,16 @@ class CoraDataHandler {
     
     //MARK: functions
     
+    func getCellItem(section: Int, index: Int) -> CellItemData {
+        switch section {
+        case 0: return carCosts[index]
+        case 1: return phoneCosts[index]
+        case 2: return homeCosts[index]
+        case 3: return insuranceCosts[index]
+        default:
+            return investCosts[index]
+        }
+    }
     //Save data
     func addNewItem(category: String, name: String, cost: String, startDate: String, duration: String, endDate: String) {
         
@@ -42,17 +52,17 @@ class CoraDataHandler {
         cellItem.duration = duration
         cellItem.endDate = endDate
         
-        saveItem()
-        
         switch category {
         case "Auto": carCosts.append(cellItem)
         case "Telefon": phoneCosts.append(cellItem)
         case "Haushalt": homeCosts.append(cellItem)
         case "Versicherung": insuranceCosts.append(cellItem)
-        case "Versicherung": investCosts.append(cellItem)
+        case "Sparplan": investCosts.append(cellItem)
         default:
             break
         }
+        
+        saveItem()
     }
     
     func saveItem() {
