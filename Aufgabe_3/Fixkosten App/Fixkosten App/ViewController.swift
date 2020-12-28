@@ -8,6 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    //MARK: - Strings
     static let labelFont = "HelveticaNeue-Medium"
     static let categorySelectionTitle = "Kategorie"
     static let categorySelectionMessage = "Bitte wählen Sie eine Kategorie aus."
@@ -21,10 +23,11 @@ class ViewController: UIViewController {
     static let saveButtonLabel = "Speichern"
     static let cancelButtonLabel = "Abbrechen"
     static let currency = " €"
+    static let durrationTimeName = " Monate"
     static let dateFormatString = "dd MMM yyyy"
     static let dateLocationString = "de_DE"
     static let checkUserInputErrorString = "User Eingabe fehlerhaft oder nicht vorhanden!"
-    
+    //MARK: - global variables
     var category: [String] = ["Auto", "Telefon", "Haushalt", "Versicherung", "Sparplan"]
     let datePicker = UIDatePicker()
     var startDate = UITextField()
@@ -59,7 +62,7 @@ class ViewController: UIViewController {
     }
 }
 
-//MARK: delegate
+//MARK: - delegate
 extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -115,7 +118,7 @@ extension ViewController: UITableViewDataSource {
         return itemCell
     }
     
-//MARK: -functions
+//MARK: - functions
     /**
      Creates a form to enter the data for the fixed costs.
      */
@@ -146,6 +149,7 @@ extension ViewController: UITableViewDataSource {
             durationTextField.placeholder = ViewController.placeholderInputDuration
             durationTextField.keyboardType = .numberPad
             durationTextField.addTarget(self, action: #selector(self.calculateDuration(_:)), for: .editingDidEnd)
+            durationTextField.addTarget(self, action: #selector(self.addDurrationTime(_:)), for: .editingDidEnd)
         }
         
         //endDate
@@ -195,6 +199,16 @@ extension ViewController: UITableViewDataSource {
             textField.text = ""
         } else {
             textField.text! += ViewController.currency
+        }
+    }
+    /**
+     Adds a durration time name when the user has added the durration.
+     */
+    @objc func addDurrationTime(_ textField: UITextField){
+        if ((textField.text?.isEmpty) == nil) {
+            textField.text = ""
+        } else {
+            textField.text! += ViewController.durrationTimeName
         }
     }
     
