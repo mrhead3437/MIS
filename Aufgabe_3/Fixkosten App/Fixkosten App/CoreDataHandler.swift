@@ -109,8 +109,25 @@ class CoraDataHandler {
             print(error.localizedDescription)
         }
     }
+    /**
+     Delete an item from the array of individual categories and their items.
+     - Parameters:
+        - section: The corresponding category
+        - index: The position or number of the respective item
+     */
     func deleteItem(section: Int, index: Int){
+        context.delete(getCellItem(section: section, index: index))
+           
+        saveItem()
         
+        switch section {
+        case 0: carCosts.remove(at: index)
+        case 1: phoneCosts.remove(at: index)
+        case 2: homeCosts.remove(at: index)
+        case 3: insuranceCosts.remove(at: index)
+        default:
+            investCosts.remove(at: index)
+        }
     }
     /**
      Counts the number of elements in a given category

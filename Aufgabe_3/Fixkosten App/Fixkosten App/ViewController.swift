@@ -32,6 +32,7 @@ class ViewController: UIViewController {
     let datePicker = UIDatePicker()
     var startDate = UITextField()
     var endDate = UITextField()
+    var durrationInMonth = UITextField()
     
     @IBOutlet weak var fixedCostsTableView: UITableView!
     
@@ -85,7 +86,12 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            CoraDataHandler.singleton.deleteItem(section: indexPath.section, index: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+        }
+    }
 }
 
 //MARK: dataSource
@@ -141,14 +147,14 @@ extension ViewController: UITableViewDataSource {
         //startDate
         inputAlert.addTextField { (startDateTextField) in
             startDateTextField.placeholder = ViewController.placeholderInputStartDate
-            startDateTextField.addTarget(self, action: #selector(self.openDatePicker(_:)), for: .touchDown)
+            startDateTextField.addTarget(self, action: #selector(self.openDatePickerForStartDate(_:)), for: .touchDown)
         }
 
         //duration
         inputAlert.addTextField { (durationTextField) in
             durationTextField.placeholder = ViewController.placeholderInputDuration
             durationTextField.keyboardType = .numberPad
-            durationTextField.addTarget(self, action: #selector(self.calculateDuration(_:)), for: .editingDidEnd)
+            durationTextField.addTarget(self, action: #selector(self.calculateEndDate(_:)), for: .editingDidEnd)
             durationTextField.addTarget(self, action: #selector(self.addDurrationTime(_:)), for: .editingDidEnd)
         }
         
@@ -156,6 +162,7 @@ extension ViewController: UITableViewDataSource {
         inputAlert.addTextField { (endDateTextField) in
             self.endDate = endDateTextField
             endDateTextField.placeholder = ViewController.placeholderInputEndDate
+            endDateTextField.addTarget(self, action: #selector(self.openDatePickerForEndDate(_:)), for: .touchDown)
         }
         
         let saveButton = UIAlertAction(title: ViewController.saveButtonLabel, style: .default) { (saveButton) in
@@ -221,16 +228,16 @@ extension ViewController: UITableViewDataSource {
     /**
      Open date picker and select a date.
      */
-    @objc func openDatePicker(_ textField: UITextField) {
+    @objc func openDatePickerForStartDate(_ textField: UITextField) {
         startDate = textField
         datePicker.datePickerMode = .date
         textField.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(handleDate(_:)), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(handleDateForStartDate(_:)), for: .valueChanged)
     }
     /**
      Adjust the formatting of the date and write it in the corresponding text field.
      */
-    @objc func handleDate(_ datePicker: UIDatePicker) {
+    @objc func handleDateForStartDate(_ datePicker: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = ViewController.dateFormatString
         dateFormatter.locale = Locale(identifier: ViewController.dateLocationString)
@@ -242,7 +249,31 @@ extension ViewController: UITableViewDataSource {
         }
     }
     
-    @objc func calculateDuration(_ textField: UITextField) {
+    /**
+     Open date picker and select a date.
+     */
+    @objc func openDatePickerForEndDate(_ textField: UITextField) {
+        endDate = textField
+        datePicker.datePickerMode = .date
+        textField.inputView = datePicker
+        datePicker.addTarget(self, action: #selector(handleDateForEndDate(_:)), for: .valueChanged)
+    }
+    /**
+     Adjust the formatting of the date and write it in the corresponding text field.
+     */
+    @objc func handleDateForEndDate(_ datePicker: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = ViewController.dateFormatString
+        dateFormatter.locale = Locale(identifier: ViewController.dateLocationString)
+        let dateAsString = dateFormatter.string(from: datePicker.date)
+        if dateAsString.isEmpty{
+            return
+        } else {
+            endDate.text = dateAsString
+        }
+    }
+    
+    @objc func calculateEndDate(_ textField: UITextField) {
         if ((textField.text?.isEmpty) == nil) {
             textField.text = ""
         } else {
@@ -254,6 +285,15 @@ extension ViewController: UITableViewDataSource {
             let date = datePicker.date.addingTimeInterval(TimeInterval(60*60*24*days))
             endDate.text = dateFormatter.string(from: date)
         }
+    }
+    
+        func getMonth(from fromDate: Date, to toDate: Date) -> String{
+        let dateFormatter = DateFormatter()
+        let calendar = Calendar.current
+        dateFormatter.dateFormat = ViewController.dateFormatString
+        dateFormatter.locale = Locale(identifier: ViewController.dateLocationString)
+        let diff = calendar.dateComponents([.month], from: fromDate, to: toDate)
+            return String(diff.month!)
     }
     
     func checkUserInput(value: String?) -> String {
