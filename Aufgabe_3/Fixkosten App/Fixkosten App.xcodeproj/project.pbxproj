@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31329F8925A78EE7000C12FD /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31329F8825A78EE7000C12FD /* TestCoreDataStack.swift */; };
 		314D3D7C256AF94500A7AC3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314D3D7B256AF94500A7AC3B /* AppDelegate.swift */; };
 		314D3D7E256AF94500A7AC3B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314D3D7D256AF94500A7AC3B /* SceneDelegate.swift */; };
 		314D3D80256AF94500A7AC3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314D3D7F256AF94500A7AC3B /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31329F8825A78EE7000C12FD /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		314D3D78256AF94500A7AC3B /* Fixkosten App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fixkosten App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		314D3D7B256AF94500A7AC3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		314D3D7D256AF94500A7AC3B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,9 +45,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31329F8725A78E4B000C12FD /* FixkostenAppTest */ = {
+			isa = PBXGroup;
+			children = (
+				31329F8825A78EE7000C12FD /* TestCoreDataStack.swift */,
+			);
+			path = FixkostenAppTest;
+			sourceTree = "<group>";
+		};
 		314D3D6F256AF94500A7AC3B = {
 			isa = PBXGroup;
 			children = (
+				31329F8725A78E4B000C12FD /* FixkostenAppTest */,
 				314D3D7A256AF94500A7AC3B /* Fixkosten App */,
 				314D3D79256AF94500A7AC3B /* Products */,
 			);
@@ -147,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				31F41CC4256FB6410068CA6B /* CellItem.swift in Sources */,
+				31329F8925A78EE7000C12FD /* TestCoreDataStack.swift in Sources */,
 				31B6220E2592783C00192EE6 /* CoreDataHandler.swift in Sources */,
 				314D3D80256AF94500A7AC3B /* ViewController.swift in Sources */,
 				314D3D86256AF94500A7AC3B /* Fixkosten_App.xcdatamodeld in Sources */,
