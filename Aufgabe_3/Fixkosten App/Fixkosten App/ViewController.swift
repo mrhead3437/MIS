@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     var startDate = UITextField()
     var endDate = UITextField()
     var durrationInMonth = UITextField()
+    var GK: String?
     
     @IBOutlet weak var fixedCostsTableView: UITableView!
     
@@ -50,6 +51,11 @@ class ViewController: UIViewController {
         self.present(categorySelectionAlert, animated: true, completion: nil)
     }
     
+    @IBAction func switchOutput(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "enterOutputSegue", sender: nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //Add extentions
@@ -61,6 +67,17 @@ class ViewController: UIViewController {
                 datePicker.preferredDatePickerStyle = .inline
             }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "enterOutputSegue" {
+            let destVC = segue.destination as! OutputViewController
+            destVC.carCosts = CoraDataHandler.singleton.carCosts
+            destVC.phoneCosts = CoraDataHandler.singleton.phoneCosts
+            destVC.homeCosts = CoraDataHandler.singleton.homeCosts
+            destVC.insuranceCosts = CoraDataHandler.singleton.insuranceCosts
+            destVC.investCosts = CoraDataHandler.singleton.insuranceCosts
+        }
+      }
 }
 
 //MARK: - delegate

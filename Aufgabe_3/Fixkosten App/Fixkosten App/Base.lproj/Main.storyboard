@@ -134,6 +134,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Fixkosten" id="MmK-IF-4Ch">
+                        <barButtonItem key="leftBarButtonItem" title="Total" id="d0c-nm-bGI">
+                            <connections>
+                                <action selector="switchOutput:" destination="BYZ-38-t0r" id="pjX-UY-GSw"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="fXp-Yk-OZc">
                             <connections>
                                 <action selector="addNewItem:" destination="BYZ-38-t0r" id="8lf-dz-3k4"/>
@@ -142,11 +147,51 @@
                     </navigationItem>
                     <connections>
                         <outlet property="fixedCostsTableView" destination="aKy-np-q7h" id="FWx-4z-YqJ"/>
+                        <segue destination="X4Q-Rd-BVf" kind="show" identifier="enterOutputSegue" id="0Eh-lv-FEc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1077.5999999999999" y="77.811094452773617"/>
+        </scene>
+        <!--Gesamtkosten-->
+        <scene sceneID="Brw-9X-jKY">
+            <objects>
+                <viewController id="X4Q-Rd-BVf" customClass="OutputViewController" customModule="Fixkosten_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W5x-0S-YG9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDg-FM-P4w">
+                                <rect key="frame" x="82" y="115" width="211" height="157"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BoG-44-qH9">
+                                <rect key="frame" x="82" y="115" width="211" height="157"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zq-pm-ia3">
+                                <rect key="frame" x="82" y="96" width="211" height="285"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1kZ-8b-xyW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Gesamtkosten" id="TYX-Je-feM"/>
+                    <connections>
+                        <outlet property="outputLabel" destination="2zq-pm-ia3" id="3c8-tS-Hr5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TXE-dA-9Bn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1852" y="77.811094452773617"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vhd-6n-9jN">
