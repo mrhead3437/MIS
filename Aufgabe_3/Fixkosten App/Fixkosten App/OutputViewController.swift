@@ -18,11 +18,27 @@ class OutputViewController: UIViewController {
     
 
     @IBOutlet weak var outputLabel: UILabel!
+    
+    @IBOutlet weak var allCarCostsLabel: UILabel!
+    @IBOutlet weak var allPhoneCostsLabel: UILabel!
+    @IBOutlet weak var allHouseCostsLabel: UILabel!
+    @IBOutlet weak var allInmsuranceCostsLabel: UILabel!
+    @IBOutlet weak var allInvestCostsLabel: UILabel!
+    
+    @IBOutlet weak var sumOfCostsLabel: UILabel!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         showCosts()
     }
-    
+    /**
+     Calculates the sum of all costs for a category, which is passed as a parameter.
+     - Parameters:
+        - cellItem: Entitiy from Database
+     - Returns: Sum of all costs for a category
+     */
     func getCost(cellItem: [CellItemData]?) -> Int {
         result = 0
         let number = cellItem!.count
@@ -36,12 +52,13 @@ class OutputViewController: UIViewController {
         return result
     }
     func showCosts() {
-            outputLabel.text = "Autokosten: \(String(getCost(cellItem: carCosts))) € \n" +
-                "Telefonkosten: \(String(getCost(cellItem: phoneCosts))) € \n" +
-                "Haushalt: \(String(getCost(cellItem: homeCosts))) € \n" +
-                "Versicherungskosten: \(String(getCost(cellItem: insuranceCosts))) € \n" +
-                "Investitionskosten: \(String(getCost(cellItem: investCosts))) € \n" +
-                " \n" +
-                " Gesamt: \((String(getCost(cellItem: carCosts) + getCost(cellItem: phoneCosts) + getCost(cellItem: homeCosts) + getCost(cellItem: insuranceCosts) + getCost(cellItem: investCosts)))) €"
+        
+        allCarCostsLabel.text = String(getCost(cellItem: carCosts)) + " €"
+        allPhoneCostsLabel.text = String(getCost(cellItem: phoneCosts)) + " €"
+        allHouseCostsLabel.text = String(getCost(cellItem: homeCosts)) + " €"
+        allInmsuranceCostsLabel.text = String(getCost(cellItem: insuranceCosts)) + " €"
+        allInvestCostsLabel.text = String(getCost(cellItem: investCosts)) + " €"
+        
+        sumOfCostsLabel.text = String(getCost(cellItem: carCosts) + getCost(cellItem: phoneCosts) + getCost(cellItem: homeCosts) + getCost(cellItem: insuranceCosts) + getCost(cellItem: investCosts)) + " €"
     }
 }

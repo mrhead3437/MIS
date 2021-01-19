@@ -75,7 +75,7 @@ class ViewController: UIViewController {
             destVC.phoneCosts = CoraDataHandler.singleton.phoneCosts
             destVC.homeCosts = CoraDataHandler.singleton.homeCosts
             destVC.insuranceCosts = CoraDataHandler.singleton.insuranceCosts
-            destVC.investCosts = CoraDataHandler.singleton.insuranceCosts
+            destVC.investCosts = CoraDataHandler.singleton.investCosts
         }
       }
 }
@@ -297,7 +297,6 @@ extension ViewController: UITableViewDataSource {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = ViewController.dateFormatString
             dateFormatter.locale = Locale(identifier: ViewController.dateLocationString)
-            
             let days = Int(textField.text!)! * 30
             let date = datePicker.date.addingTimeInterval(TimeInterval(60*60*24*days))
             endDate.text = dateFormatter.string(from: date)
